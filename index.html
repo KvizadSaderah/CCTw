@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmo Cats Token</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #ffeaa7;
+            --text-color: #2d3436;
+            --bg-color: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                linear-gradient(45deg, rgba(108, 92, 231, 0.1) 25%, transparent 25%) -50px 0,
+                linear-gradient(-45deg, rgba(108, 92, 231, 0.1) 25%, transparent 25%) -50px 0,
+                linear-gradient(45deg, transparent 75%, rgba(108, 92, 231, 0.1) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(108, 92, 231, 0.1) 75%);
+            background-size: 100px 100px;
+            animation: bg-animation 20s linear infinite;
+        }
+
+        @keyframes bg-animation {
+            0% {
+                background-position: -50px 0, -50px 0, 0 0, 0 0;
+            }
+            100% {
+                background-position: 50px 0, 50px 0, 100px 100px, 100px 100px;
+            }
+        }
+
+        header {
+            background-color: rgba(108, 92, 231, 0.9);
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .logo img {
+            max-width: 40px;
+            margin-right: 10px;
+        }
+
+        .contact {
+            text-align: center;
+
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(108, 92, 231, 0.8), rgba(162, 155, 254, 0.8)), url('https://source.unsplash.com/random/1920x1080?crypto') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        section {
+            padding: 100px 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        section:nth-of-type(even) {
+            background-color: rgba(241, 242, 246, 0.5);
+        }
+
+        section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .features-grid,
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-item,
+        .token-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover,
+        .token-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-item i,
+        .socials i {
+            font-size: 3em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3,
+        .token-item h3 {
+            font-size: 1.5em;
+            margin: 15px 0;
+            color: var(--primary-color);
+        }
+
+        .feature-item p,
+        .token-item p,
+        section p {
+            font-size: 1.1em;
+            color: #636e72;
+            line-height: 1.6;
+        }
+
+        .tokenomics ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+
+        .tokenomics ul li {
+            font-size: 1.2em;
+            color: #636e72;
+            margin-bottom: 15px;
+        }
+
+        .whitepaper .btn {
+            margin-top: 20px;
+        }
+
+        .buy-token ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .buy-token ul li {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #636e72;
+        }
+
+        .dao {
+            background: linear-gradient(rgba(108, 92, 231, 0.9), rgba(162, 155, 254, 0.9)), url('https://source.unsplash.com/random/1920x1080?blockchain') no-repeat center center/cover;
+            color: white;
+        }
+
+        .dao h2, .dao h3 {
+            color: var(--accent-color);
+        }
+
+        .dao p, .dao ul li {
+            color: white;
+        }
+
+        .dao-actions {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .dao-actions ul li {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .dao-actions ul li .btn {
+            margin-left: 10px;
+            font-size: 0.8em;
+            padding: 10px 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer p {
+            margin-bottom: 20px;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .socials a {
+            color: white;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .socials a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            section h2 {
+                font-size: 2em;
+            }
+
+            .feature-item,
+            .token-item {
+                padding: 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                font-size: 1.5em;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9em;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .feature-item,
+            .token-item {
+                padding: 15px;
+            }
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background-color: var(--primary-color);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 50px 20px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu ul li {
+            margin-bottom: 20px;
+        }
+
+        .mobile-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://via.placeholder.com/150?text=CCT" alt="Cosmo Cats Token Logo">
+                <span>Cosmo Cats Token</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                    <li><a href="#whitepaper">Whitepaper</a></li>
+                    <li><a href="#buy">Buy Token</a></li>
+                    <li><a href="#dao">DAO</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="close-menu">
+            <i class="fas fa-times"></i>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#tokenomics">Tokenomics</a></li>
+            <li><a href="#whitepaper">Whitepaper</a></li>
+            <li><a href="#buy">Buy Token</a></li>
+            <li><a href="#dao">DAO</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Cosmo Cats Token</h1>
+            <p>Join the decentralized future with the cutest token in the galaxy!</p>
+            <a href="#buy" class="btn">Buy token</a>
+            <a href="#contact" class="btn">Join the Community</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>Cosmo Cats Token (CCT) is more than just a cryptocurrency - it's a movement. We're building a decentralized community of cat lovers and crypto enthusiasts, united by our passion for innovation and adorable felines. Our mission is to make the world of DeFi more accessible, fun, and rewarding for everyone.</p>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>No Transaction Taxes</h3>
+                    <p>Enjoy fee-free transactions within our ecosystem.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Contract Renunciation</h3>
+                    <p>Ensuring true decentralization and community ownership.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Governance</h3>
+                    <p>Your voice matters in shaping the future of CCT.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="tokenomics">
+        <div class="container">
+            <h2>Tokenomics</h2>
+            <ul>
+                <li><strong>Liquidity on DEX:</strong> 900,000,000,000 CCT (90%)</li>
+                <li><strong>Centralized Exchanges:</strong> 70,000,000,000 CCT (7%)</li>
+                <li><strong>Development Team:</strong> 20,000,000,000 CCT (2%)</li>
+                <li><strong>Marketing and Partnerships:</strong> 10,000,000,000 CCT (1%)</li>
+            </ul>
+            <div style="width: 100%; max-width: 400px; margin: auto;">
+                <canvas id="tokenomicsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="whitepaper" class="whitepaper">
+        <div class="container">
+            <h2>Whitepaper</h2>
+            <p>Dive deep into the Cosmo Cats Token ecosystem. Our whitepaper outlines our vision, technology, and roadmap for the future.</p>
+            <a href="docs/whitepaper.pdf" target="_blank" class="btn">Download Whitepaper</a>
+        </div>
+    </section>
+
+    <section id="buy" class="buy-token">
+        <div class="container">
+            <h2>How to Buy Cosmo Cats Token</h2>
+            <p>Join the Cosmo Cats community in just a few simple steps:</p>
+            <ul>
+                <li>1. Set up a wallet that supports Polygon (e.g., MetaMask).</li>
+                <li>2. Fund your wallet with MATIC tokens.</li>
+                <li>3. Connect your wallet to a decentralized exchange (DEX) like QuickSwap.</li>
+                <li>4. Swap MATIC for CCT tokens.</li>
+                <li>5. Welcome to the Cosmo Cats family!</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="dao" class="dao">
+        <div class="container">
+            <h2>Participate in the DAO</h2>
+            <p>As a Cosmo Cat Token holder, you have the power to shape our future. Participate in our decentralized governance and help guide the project's direction.</p>
+            <a href="https://snapshot.org/" target="_blank" class="btn">Join the DAO</a>
+            <div class="dao-actions">
+                <h3>Current Proposals</h3>
+                <ul>
+                    <li>Proposal 1: Increase marketing budget for Q4 2024 <a href="#" class="btn">Vote</a></li>
+                    <li>Proposal 2: Partner with CatCharity.org <a href="#" class="btn">Vote</a></li>
+                    <li>Proposal 3: Launch CCT merchandise store <a href="#" class="btn">Vote</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Have questions or want to get involved? Reach out to us:</p>
+            <p>Email: <a href="mailto:meow@cosmocatstoken.com">meow@cosmocatstoken.com</a></p>
+            <div class="socials">
+                <a href="https://x.com/CosmoCatsToken" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://t.me/CosmoCatsToken" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://discord.gg/PTwhEWn5" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Cosmo Cats Token. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        AOS.init();
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Tokenomics chart
+        var ctx = document.getElementById('tokenomicsChart').getContext('2d');
+        var tokenomicsChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Liquidity on DEX', 'Centralized Exchanges', 'Development Team', 'Marketing & Partnerships'],
+                datasets: [{
+                    data: [90, 7, 2, 1],
+                    backgroundColor: ['#6c5ce7','#a29bfe','#ffeaa7','#fdcb6e'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Cosmo Cats Token (CCT) Distribution'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
